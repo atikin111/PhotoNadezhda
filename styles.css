@@ -226,6 +226,11 @@ img {
   color: var(--text);
 }
 
+/* Пока тип съемки не выбран, поле выглядит как пустой плейсхолдер. */
+.form__field select:invalid {
+  color: #8d7d72;
+}
+
 .form__field input:focus,
 .form__field select:focus {
   outline: 2px solid rgba(168, 97, 59, 0.22);
@@ -256,6 +261,80 @@ img {
   font-weight: 600;
 }
 
+.contacts {
+  text-align: center;
+}
+
+.contacts__heading p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contacts__info {
+  display: grid;
+  gap: 8px;
+  margin-top: 28px;
+  color: var(--muted);
+}
+
+.contacts__info p {
+  margin: 0;
+}
+
+.contacts__socials {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 220px));
+  justify-content: center;
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.social-card {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  padding: 24px 18px;
+  border-radius: 24px;
+  text-decoration: none;
+  color: var(--text);
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.social-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(168, 97, 59, 0.35);
+}
+
+.social-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+}
+
+.social-card__icon svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.social-card:nth-child(2) .social-card__icon svg,
+.social-card:nth-child(3) .social-card__icon svg {
+  fill: currentColor;
+  stroke: none;
+}
+
 @media (max-width: 800px) {
   .hero {
     padding-top: 72px;
@@ -263,5 +342,9 @@ img {
 
   .booking {
     grid-template-columns: 1fr;
+  }
+
+  .contacts__socials {
+    grid-template-columns: minmax(220px, 320px);
   }
 }

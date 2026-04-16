@@ -61,7 +61,7 @@ function validateBooking(booking) {
   }
 
   if (!booking.shootType) {
-    errors.shootType = "Выберите тип съемки.";
+    errors.shootType = "Выбери тип съемки.";
   }
 
   return errors;
