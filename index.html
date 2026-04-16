@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Photo Nadezhda | Портфолио фотографа</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="container">
+        <p class="hero__eyebrow">Портфолио фотографа</p>
+        <h1>Теплые кадры для важных моментов</h1>
+        <p class="hero__text">
+          Минимальная версия сайта для фотографа: с галереей, фильтрами и
+          формой заявки на съемку.
+        </p>
+        <a class="hero__button" href="#booking">Оставить заявку</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="container">
+          <div class="section__heading">
+            <p class="section__eyebrow">Галерея</p>
+            <h2>Примеры съемок</h2>
+            <p>
+              Карточки здесь демонстрационные. Позже их можно заменить на
+              реальные фотографии и расширить фильтрацию.
+            </p>
+          </div>
+
+          <div class="filters" aria-label="Фильтры галереи">
+            <button class="filter-button is-active" data-filter="all" type="button">
+              Все
+            </button>
+            <button class="filter-button" data-filter="wedding" type="button">
+              Свадьба
+            </button>
+            <button class="filter-button" data-filter="personal" type="button">
+              Личная
+            </button>
+            <button class="filter-button" data-filter="couple" type="button">
+              Для пары
+            </button>
+            <button class="filter-button" data-filter="corporate" type="button">
+              Корпоратив
+            </button>
+          </div>
+
+          <div class="gallery">
+            <article class="card" data-category="wedding">
+              <div class="card__image card__image--rose"></div>
+              <div class="card__content">
+                <h3>Свадебная история</h3>
+                <p>Мягкий свет, прогулка и репортаж важных деталей дня.</p>
+              </div>
+            </article>
+
+            <article class="card" data-category="personal">
+              <div class="card__image card__image--gold"></div>
+              <div class="card__content">
+                <h3>Личный портрет</h3>
+                <p>Неспешная съемка с акцентом на настроение и характер.</p>
+              </div>
+            </article>
+
+            <article class="card" data-category="couple">
+              <div class="card__image card__image--sand"></div>
+              <div class="card__content">
+                <h3>История для пары</h3>
+                <p>Кадры про близость, движение и живые эмоции.</p>
+              </div>
+            </article>
+
+            <article class="card" data-category="corporate">
+              <div class="card__image card__image--olive"></div>
+              <div class="card__content">
+                <h3>Корпоративная съемка</h3>
+                <p>Репортаж для команды, мероприятий и брендов.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--accent" id="booking">
+        <div class="container booking">
+          <div class="booking__intro">
+            <p class="section__eyebrow">Заявка</p>
+            <h2>Оставьте заявку на фотосъемку</h2>
+            <p>
+              В V1 форма работает без сервера: заявка проходит проверку и
+              сохраняется в браузере. Это удобно для учебного проекта и легко
+              дорабатывается позже до отправки на backend.
+            </p>
+          </div>
+
+          <form class="form" id="booking-form" novalidate>
+            <label class="form__field">
+              <span>Имя</span>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                placeholder="Например, Анна"
+                required
+              />
+              <small class="form__error" data-error-for="name"></small>
+            </label>
+
+            <label class="form__field">
+              <span>Номер телефона</span>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                placeholder="+7 (999) 123-45-67"
+                required
+              />
+              <small class="form__error" data-error-for="phone"></small>
+            </label>
+
+            <label class="form__field">
+              <span>Тип съемки</span>
+              <select id="shootType" name="shootType" required>
+                <option value="">Выберите тип съемки</option>
+                <option value="Корпоратив">Корпоратив</option>
+                <option value="Свадьба">Свадьба</option>
+                <option value="Личная">Личная</option>
+                <option value="Для пары">Для пары</option>
+                <option value="Выпускной">Выпускной</option>
+                <option value="Другое мероприятие">Другое мероприятие</option>
+              </select>
+              <small class="form__error" data-error-for="shootType"></small>
+            </label>
+
+            <button class="form__button" type="submit">Отправить заявку</button>
+            <p class="form__success" id="form-success" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
