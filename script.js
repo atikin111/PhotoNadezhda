@@ -1,58 +1,64 @@
 const filterButtons = document.querySelectorAll(".filter-button");
-const galleryCards = document.querySelectorAll(".card");
+const galleryItems = document.querySelectorAll(".card");
 const bookingForm = document.querySelector("#booking-form");
-const successMessage = document.querySelector("#form-success");
+const formSuccessMessage = document.querySelector("#form-success");
 
-// Простая фильтрация по data-атрибуту карточки.
+// Фильтруем карточки галереи по выбранной категории.
 filterButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    const selectedFilter = button.dataset.filter;
+    const selectedCategory = button.dataset.filter;
 
     filterButtons.forEach((item) => item.classList.remove("is-active"));
     button.classList.add("is-active");
 
-    galleryCards.forEach((card) => {
+    galleryItems.forEach((card) => {
       const cardCategory = card.dataset.category;
-      const shouldShow =
-        selectedFilter === "all" || selectedFilter === cardCategory;
+      const isVisible =
+        selectedCategory === "all" || selectedCategory === cardCategory;
 
-      card.classList.toggle("is-hidden", !shouldShow);
+      card.classList.toggle("is-hidden", !isVisible);
     });
   });
 });
 
+// Обрабатываем отправку формы без перезагрузки страницы.
 bookingForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  const formData = new FormData(bookingForm);
-  const booking = {
-    name: formData.get("name").trim(),
-    phone: formData.get("phone").trim(),
-    shootType: formData.get("shootType").trim(),
-    createdAt: new Date().toLocaleString("ru-RU"),
-  };
-
   clearErrors();
-  successMessage.textContent = "";
+  formSuccessMessage.textContent = "";
 
-  const errors = validateBooking(booking);
+  const bookingData = getBookingFormData();
+  const errors = validateBooking(bookingData);
 
   if (Object.keys(errors).length > 0) {
     showErrors(errors);
     return;
   }
 
-  saveBooking(booking);
+  saveBooking(bookingData);
   bookingForm.reset();
-  successMessage.textContent =
+  formSuccessMessage.textContent =
     "Заявка сохранена. Для V1 она хранится в браузере пользователя.";
 });
 
-function validateBooking(booking) {
-  const errors = {};
-  const phoneDigits = booking.phone.replace(/\D/g, "");
+function getBookingFormData() {
+  const formData = new FormData(bookingForm);
 
-  if (booking.name.length < 2) {
+  return {
+    name: formData.get("name").trim(),
+    phone: formData.get("phone").trim(),
+    shootType: formData.get("shootType").trim(),
+    createdAt: new Date().toLocaleString("ru-RU"),
+  };
+}
+
+// Проверяем, что пользователь заполнил обязательные поля корректно.
+function validateBooking(bookingData) {
+  const errors = {};
+  const phoneDigits = bookingData.phone.replace(/\D/g, "");
+
+  if (bookingData.name.length < 2) {
     errors.name = "Введите имя минимум из 2 символов.";
   }
 
@@ -60,13 +66,14 @@ function validateBooking(booking) {
     errors.phone = "Введите корректный номер телефона.";
   }
 
-  if (!booking.shootType) {
+  if (!bookingData.shootType) {
     errors.shootType = "Выбери тип съемки.";
   }
 
   return errors;
 }
 
+// Показываем сообщение под конкретным полем формы.
 function showErrors(errors) {
   Object.entries(errors).forEach(([fieldName, message]) => {
     const errorElement = document.querySelector(
@@ -79,18 +86,19 @@ function showErrors(errors) {
   });
 }
 
+// Очищаем старые ошибки перед новой проверкой формы.
 function clearErrors() {
   document
     .querySelectorAll(".form__error")
     .forEach((element) => (element.textContent = ""));
 }
 
-function saveBooking(booking) {
+function saveBooking(bookingData) {
   // localStorage дает минимально рабочее хранение без сервера.
   const storageKey = "photoNadezhdaBookings";
-  const existingBookings =
+  const savedBookings =
     JSON.parse(localStorage.getItem(storageKey) || "[]");
 
-  existingBookings.push(booking);
-  localStorage.setItem(storageKey, JSON.stringify(existingBookings));
+  savedBookings.push(bookingData);
+  localStorage.setItem(storageKey, JSON.stringify(savedBookings));
 }

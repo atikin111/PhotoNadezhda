@@ -1,4 +1,5 @@
 :root {
+  /* Основные цвета сайта */
   --bg: #f7f1e8;
   --surface: rgba(255, 252, 247, 0.86);
   --surface-strong: #fffaf3;
@@ -35,6 +36,7 @@ img {
   margin: 0 auto;
 }
 
+/* Hero */
 .hero {
   padding: 96px 0 72px;
 }
@@ -106,6 +108,7 @@ img {
   padding-bottom: 96px;
 }
 
+/* Галерея */
 .filters {
   display: flex;
   flex-wrap: wrap;
@@ -189,6 +192,7 @@ img {
   line-height: 1.6;
 }
 
+/* Форма */
 .booking {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -261,6 +265,7 @@ img {
   font-weight: 600;
 }
 
+/* Контакты */
 .contacts {
   text-align: center;
 }
@@ -335,6 +340,7 @@ img {
   stroke: none;
 }
 
+/* Адаптивность */
 @media (max-width: 800px) {
   .hero {
     padding-top: 72px;
