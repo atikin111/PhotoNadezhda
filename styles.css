@@ -36,6 +36,108 @@ img {
   margin: 0 auto;
 }
 
+body.is-modal-open {
+  overflow: hidden;
+}
+
+/* Promo modal */
+.promo-modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  z-index: 20;
+}
+
+.promo-modal.is-visible {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.promo-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(47, 36, 29, 0.56);
+  backdrop-filter: blur(3px);
+}
+
+.promo-modal__dialog {
+  position: relative;
+  width: min(100%, 520px);
+  padding: 32px;
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at top right, rgba(245, 204, 173, 0.5), transparent 28%),
+    var(--surface-strong);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 30px 80px rgba(44, 28, 18, 0.24);
+}
+
+.promo-modal__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--text);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.promo-modal__eyebrow {
+  margin: 0 0 12px;
+  color: var(--accent-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.promo-modal h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.05;
+}
+
+.promo-modal__text {
+  margin: 16px 0 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.promo-modal__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24px;
+  padding: 15px 24px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.promo-modal__button:hover {
+  transform: translateY(-1px);
+  background: var(--accent-dark);
+}
+
 /* Hero */
 .hero {
   padding: 96px 0 72px;
@@ -208,6 +310,17 @@ img {
   box-shadow: var(--shadow);
 }
 
+.form__promo {
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(168, 97, 59, 0.1);
+  border: 1px solid rgba(168, 97, 59, 0.18);
+  color: var(--accent-dark);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
 .form__field {
   display: block;
   margin-bottom: 18px;
@@ -342,6 +455,11 @@ img {
 
 /* Адаптивность */
 @media (max-width: 800px) {
+  .promo-modal__dialog {
+    padding: 28px 20px;
+    border-radius: 24px;
+  }
+
   .hero {
     padding-top: 72px;
   }

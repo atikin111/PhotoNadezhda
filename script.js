@@ -2,6 +2,11 @@ const filterButtons = document.querySelectorAll(".filter-button");
 const galleryItems = document.querySelectorAll(".card");
 const bookingForm = document.querySelector("#booking-form");
 const formSuccessMessage = document.querySelector("#form-success");
+const promoModal = document.querySelector("#promo-modal");
+const promoCta = document.querySelector("#promo-cta");
+const discountNote = document.querySelector("#discount-note");
+
+initializePromoModal();
 
 // Фильтруем карточки галереи по выбранной категории.
 filterButtons.forEach((button) => {
@@ -101,4 +106,50 @@ function saveBooking(bookingData) {
 
   savedBookings.push(bookingData);
   localStorage.setItem(storageKey, JSON.stringify(savedBookings));
+}
+
+function initializePromoModal() {
+  if (!promoModal) {
+    return;
+  }
+
+  if (discountNote) {
+    discountNote.hidden = true;
+  }
+
+  window.setTimeout(openPromoModal, 900);
+
+  promoModal.addEventListener("click", (event) => {
+    const closeTarget = event.target.closest("[data-close-promo='true']");
+
+    if (closeTarget) {
+      closePromoModal();
+    }
+  });
+
+  promoCta?.addEventListener("click", () => {
+    if (discountNote) {
+      discountNote.hidden = false;
+    }
+
+    closePromoModal();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && promoModal.classList.contains("is-visible")) {
+      closePromoModal();
+    }
+  });
+}
+
+function openPromoModal() {
+  promoModal.classList.add("is-visible");
+  promoModal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("is-modal-open");
+}
+
+function closePromoModal() {
+  promoModal.classList.remove("is-visible");
+  promoModal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("is-modal-open");
 }

@@ -7,6 +7,34 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div class="promo-modal" id="promo-modal" aria-hidden="true">
+      <div class="promo-modal__backdrop" data-close-promo="true"></div>
+      <div
+        class="promo-modal__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="promo-title"
+        aria-describedby="promo-description"
+      >
+        <button
+          class="promo-modal__close"
+          type="button"
+          aria-label="Закрыть окно со скидкой"
+          data-close-promo="true"
+        >
+          ×
+        </button>
+        <p class="promo-modal__eyebrow">Предложение для новых клиентов</p>
+        <h2 id="promo-title">Скидка 10% на первую фотосессию</h2>
+        <p id="promo-description" class="promo-modal__text">
+          Оставьте заявку сегодня, чтобы получить приятный бонус на первую съемку и
+          обсудить удобный формат фотосессии.
+        </p>
+        <a class="promo-modal__button" href="#booking" id="promo-cta">
+          Получить скидку
+        </a>
+      </div>
+    </div>
     <!-- Верхний блок сайта -->
     <header class="hero">
       <div class="container">
@@ -101,6 +129,9 @@
           </div>
 
           <form class="form" id="booking-form" novalidate>
+            <p class="form__promo" id="discount-note" hidden>
+              Для новых клиентов действует скидка 10% на первую фотосессию.
+            </p>
             <label class="form__field">
               <span>Имя</span>
               <input
