@@ -1,3 +1,4 @@
+const galleryFilters = document.querySelector(".filters");
 const filterButtons = document.querySelectorAll(".filter-button");
 const galleryItems = document.querySelectorAll(".card");
 const bookingForm = document.querySelector("#booking-form");
@@ -17,14 +18,15 @@ filterButtons.forEach((button) => {
     button.classList.add("is-active");
 
     galleryItems.forEach((card) => {
-      const cardCategory = card.dataset.category;
-      const isVisible =
-        selectedCategory === "all" || selectedCategory === cardCategory;
+      const cardCategories = getCardCategories(card);
+      const isVisible = cardCategories.includes(selectedCategory);
 
       card.classList.toggle("is-hidden", !isVisible);
     });
   });
 });
+
+warnAboutGalleryCategoryMismatch();
 
 // Обрабатываем отправку формы без перезагрузки страницы.
 bookingForm.addEventListener("submit", (event) => {
@@ -56,6 +58,50 @@ function getBookingFormData() {
     shootType: formData.get("shootType").trim(),
     createdAt: new Date().toLocaleString("ru-RU"),
   };
+}
+
+function getCardCategories(card) {
+  return (card.dataset.categories || "")
+    .split(/\s+/)
+    .map((category) => category.trim())
+    .filter(Boolean);
+}
+
+function warnAboutGalleryCategoryMismatch() {
+  if (!galleryFilters) {
+    return;
+  }
+
+  const declaredFilters = new Set(
+    (galleryFilters.dataset.galleryFilters || "")
+      .split(/\s+/)
+      .map((category) => category.trim())
+      .filter(Boolean)
+  );
+
+  const buttonFilters = new Set(
+    [...filterButtons]
+      .map((button) => button.dataset.filter?.trim())
+      .filter(Boolean)
+  );
+
+  const cardFilters = new Set(
+    [...galleryItems].flatMap((card) => getCardCategories(card))
+  );
+
+  const missingButtons = [...declaredFilters].filter(
+    (category) => !buttonFilters.has(category)
+  );
+  const missingCards = [...declaredFilters].filter(
+    (category) => !cardFilters.has(category)
+  );
+
+  if (missingButtons.length || missingCards.length) {
+    console.warn("Gallery category mismatch detected.", {
+      missingButtons,
+      missingCards,
+    });
+  }
 }
 
 // Проверяем, что пользователь заполнил обязательные поля корректно.
